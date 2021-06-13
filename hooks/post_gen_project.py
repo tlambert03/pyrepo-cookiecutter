@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import subprocess
+from contextlib import suppress
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
@@ -9,9 +10,11 @@ def remove_file(filepath):
     os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
 
 
-if __name__ == "__main__" and "No license" == "{{ cookiecutter.license }}":
-    remove_file("LICENSE")
+if __name__ == "__main__":
+    if "No license" == "{{ cookiecutter.license }}":
+        remove_file("LICENSE")
 
-    subprocess.run(['git', 'init', '{{cookiecutter.project_name}}'])
-    subprocess.run(['git', '-C', '{{cookiecutter.project_name}}', 'add', '.'])
-    subprocess.run(['git', '-C', '{{cookiecutter.project_name}}', 'add', '.'])
+    with suppress(Exception):
+        subprocess.run(["git", "init", "-q"])
+        subprocess.run(["git", "add", "."])
+        subprocess.run(["git", "commit", "-q", "-m", "initial commit"])
