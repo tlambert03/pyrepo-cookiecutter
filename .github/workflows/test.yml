@@ -35,4 +35,4 @@ jobs:
           pip install pytest pytest-cookies tox
 
       - name: Test
-        run: pytest -s -v --color=yes
+        run: pytest tests -s -v --color=yes
