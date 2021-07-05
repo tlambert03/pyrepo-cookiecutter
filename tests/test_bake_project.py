@@ -1,8 +1,9 @@
-from contextlib import contextmanager
-import shlex
-import os
-import subprocess
 import datetime
+import os
+import shlex
+import subprocess
+from contextlib import contextmanager
+
 from cookiecutter.utils import rmtree
 
 
@@ -70,7 +71,7 @@ def test_bake_with_defaults(cookies):
         assert result.exit_code == 0
         assert result.exception is None
 
-        found_toplevel_files = [f.name for f in result.project_path.glob('*')]
+        found_toplevel_files = [f.name for f in result.project_path.glob("*")]
         assert "setup.cfg" in found_toplevel_files
         assert "pyrepo" in found_toplevel_files
         assert "tox.ini" in found_toplevel_files
@@ -107,18 +108,14 @@ def test_bake_selecting_license(cookies):
         + "above copyright notice, this",
     }
     for license, target_string in license_strings.items():
-        with bake_in_temp_dir(
-            cookies, extra_context={"license": license}
-        ) as result:
+        with bake_in_temp_dir(cookies, extra_context={"license": license}) as result:
             assert target_string in (result.project_path / "LICENSE").read_text()
             assert license in (result.project_path / "setup.cfg").read_text()
 
 
 def test_bake_not_open_source(cookies):
-    with bake_in_temp_dir(
-        cookies, extra_context={"license": "No license"}
-    ) as result:
-        found_toplevel_files = [f.name for f in result.project_path.glob('*')]
+    with bake_in_temp_dir(cookies, extra_context={"license": "No license"}) as result:
+        found_toplevel_files = [f.name for f in result.project_path.glob("*")]
         assert "setup.cfg" in found_toplevel_files
         assert "LICENSE" not in found_toplevel_files
         assert "License" not in (result.project_path / "README.md").read_text()
