@@ -5,7 +5,7 @@
 {%- endif %}
 [![PyPI](https://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg?color=green)](https://pypi.org/project/{{cookiecutter.project_name}})
 [![Python Version](https://img.shields.io/pypi/pyversions/{{cookiecutter.project_name}}.svg?color=green)](https://python.org)
-[![CI](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/workflows/ci/badge.svg)](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/actions)
+[![CI](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.project_name}})
 
 {{cookiecutter.project_short_description}}
