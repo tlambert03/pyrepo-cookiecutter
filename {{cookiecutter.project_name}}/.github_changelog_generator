@@ -1,0 +1,5 @@
+user={{cookiecutter.github_username}}
+project={{cookiecutter.project_name}}
+issues=false
+exclude-labels=duplicate,question,invalid,wontfix,hide
+add-sections={"tests":{"prefix":"**Tests & CI:**","labels":["tests"]}}
