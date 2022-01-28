@@ -6,7 +6,7 @@
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "package description.",
   "pypi_username": "{{ cookiecutter.github_username }}",
-  "version_control": ["setuptools-scm", "bump2version", "None"],
+  "version_control": ["setuptools-scm", "None"],
   "license": ["BSD license", "MIT license", "No license"],
   "_copy_without_render": [
 		".github/workflows/*"
