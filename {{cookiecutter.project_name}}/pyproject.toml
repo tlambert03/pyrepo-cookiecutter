@@ -1,0 +1,12 @@
+[build-system]
+{% if cookiecutter.version_control == 'setuptools-scm' -%}
+requires = ["setuptools", "wheel", "setuptools-scm"]
+{%- else -%}
+requires = ["setuptools", "wheel"]
+{%- endif %}
+build-backend = "setuptools.build_meta"
+
+{% if cookiecutter.version_control == 'setuptools-scm' %}
+[tool.setuptools_scm]
+write_to = "{{cookiecutter.project_slug}}/_version.py"
+{%- endif %}
