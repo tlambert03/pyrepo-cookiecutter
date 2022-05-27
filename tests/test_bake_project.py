@@ -3,6 +3,7 @@ import os
 import shlex
 import subprocess
 from contextlib import contextmanager
+import pytest
 
 from cookiecutter.utils import rmtree
 
@@ -74,8 +75,9 @@ def test_bake_with_defaults(cookies):
         assert result.exception is None
 
         found_toplevel_files = [f.name for f in result.project_path.glob("*")]
-        assert "setup.cfg" in found_toplevel_files
-        assert "pyrepo" in found_toplevel_files
+        assert "pyproject.toml" in found_toplevel_files
+        assert "src" in found_toplevel_files
+        assert (result.project_path / "src" / "pyrepo").exists()
         assert "tox.ini" in found_toplevel_files
         assert "tests" in found_toplevel_files
 
@@ -83,41 +85,20 @@ def test_bake_with_defaults(cookies):
 def test_bake_and_run_tests(cookies):
     with bake_in_temp_dir(cookies) as result:
         assert result.project_path.is_dir()
-        run_inside_dir("pytest", str(result.project_path)) == 0
-        print("test_bake_and_run_tests path", str(result.project_path))
-
-
-def test_bake_withspecialchars_and_run_tests(cookies):
-    """Ensure that a `full_name` with double quotes does not break setup.cfg"""
-    with bake_in_temp_dir(
-        cookies, extra_context={"full_name": 'name "quote" name'}
-    ) as result:
-        assert result.project_path.is_dir()
-        run_inside_dir("pytest", str(result.project_path)) == 0
+        assert run_inside_dir("pytest", str(result.project_path)) == 0
 
 
 def test_bake_with_apostrophe_and_run_tests(cookies):
-    """Ensure that a `full_name` with apostrophes does not break setup.cfg"""
+    """Ensure that a `full_name` with apostrophes does not break pyproject.toml"""
     with bake_in_temp_dir(cookies, extra_context={"full_name": "O'connor"}) as result:
         assert result.project_path.is_dir()
-        run_inside_dir("pytest", str(result.project_path)) == 0
+        assert run_inside_dir("pytest", str(result.project_path)) == 0
 
 
-def test_bake_selecting_license(cookies):
-    license_strings = {
-        "MIT license": "MIT ",
-        "BSD license": "Redistributions of source code must retain the "
-        + "above copyright notice, this",
-    }
-    for license, target_string in license_strings.items():
-        with bake_in_temp_dir(cookies, extra_context={"license": license}) as result:
-            assert target_string in (result.project_path / "LICENSE").read_text()
-            assert license in (result.project_path / "setup.cfg").read_text()
-
-
-def test_bake_not_open_source(cookies):
-    with bake_in_temp_dir(cookies, extra_context={"license": "No license"}) as result:
-        found_toplevel_files = [f.name for f in result.project_path.glob("*")]
-        assert "setup.cfg" in found_toplevel_files
-        assert "LICENSE" not in found_toplevel_files
-        assert "License" not in (result.project_path / "README.md").read_text()
+def test_bake_and_build(cookies):
+    with bake_in_temp_dir(cookies) as result:
+        run_inside_dir('git init -q', str(result.project_path))
+        run_inside_dir('git add .', str(result.project_path))
+        run_inside_dir('git commit -q -m "initial"', str(result.project_path))
+        assert run_inside_dir('python -m build', str(result.project_path)) == 0
+        assert len(list((result.project_path / 'dist').iterdir())) == 2

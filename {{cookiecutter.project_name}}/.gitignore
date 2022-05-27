@@ -105,3 +105,4 @@ ENV/
 .vscode/
 
 {{cookiecutter.project_slug}}/_version.py
+src/{{cookiecutter.project_slug}}/_version.py
