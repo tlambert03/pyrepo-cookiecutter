@@ -1,12 +1,98 @@
 [build-system]
 {% if cookiecutter.version_control == 'setuptools-scm' -%}
-requires = ["setuptools", "wheel", "setuptools-scm"]
+requires = ["setuptools>=45", "wheel", "setuptools-scm>=6.2"]
 {%- else -%}
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=45", "wheel"]
 {%- endif %}
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "{{cookiecutter.project_name}}"
+description = "{{ cookiecutter.project_short_description }}"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+  {email = "{{cookiecutter.email}}"},
+  {name = "{{cookiecutter.full_name}}"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dynamic = ["version"]
+dependencies = [
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=6.0",
+    "pytest-cov",
+]
+dev = [
+    "black",
+    "flake8",
+    "flake8-docstrings",
+    "flake8-typing-imports",
+    "ipython",
+    "isort",
+    "mypy",
+    "pre-commit",
+    "pydocstyle",
+    "pytest-cov",
+    "pytest",
+    "rich",
+    "cruft",
+]
+
+[project.urls]
+homepage = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
+repository = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
+# documentation = "readthedocs.org"
+# changelog = "github.com/me/spam/blob/master/CHANGELOG.md"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
+packages = {find = {where = ["src"], exclude=[]}}
+
 {% if cookiecutter.version_control == 'setuptools-scm' %}
 [tool.setuptools_scm]
-write_to = "{{cookiecutter.project_slug}}/_version.py"
 {%- endif %}
+
+[tool.isort]
+profile = "black"
+src_paths = ["src/{{cookiecutter.project_slug}}", "tests"]
+
+[tool.pydocstyle]
+match_dir = "src/{{cookiecutter.project_slug}}"
+convention = "numpy"
+add_select = "D402,D415,D417"
+ignore = "D100,D213,D401,D413,D107"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]
+filterwarnings = [
+    "error",
+]
+
+[tool.mypy]
+files = "src/{{cookiecutter.project_slug}}/**/"
+strict = true
+disallow_any_generics = false
+disallow_subclassing_any = false
+show_error_codes = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "@overload",
+    "except ImportError",
+]
+
