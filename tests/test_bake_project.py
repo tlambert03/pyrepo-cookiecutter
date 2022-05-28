@@ -3,8 +3,8 @@ import os
 import shlex
 import subprocess
 from contextlib import contextmanager
-import pytest
 
+import pytest
 from cookiecutter.utils import rmtree
 
 
@@ -102,3 +102,12 @@ def test_bake_and_build(basic_build):
         subprocess.check_call(["check-manifest"])
         subprocess.check_call(["python", "-m", "build"])
         assert len(list((basic_build.project_path / "dist").iterdir())) == 2
+
+
+def test_bake_and_pre_commit(basic_build):
+    with inside_dir(str(basic_build.project_path)):
+        subprocess.check_call(["git", "init", "-q"])
+        subprocess.check_call(["pre-commit", "autoupdate"])
+        subprocess.check_call(["pre-commit", "install"])
+        subprocess.check_call(["git", "add", "."])
+        subprocess.check_call(["pre-commit", "run", "--all-files"])
