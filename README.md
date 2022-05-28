@@ -10,6 +10,18 @@ Recommend using [`cruft`](https://github.com/cruft/cruft) instead of cookiecutte
 cruft create https://github.com/tlambert03/pyrepo-cookiecutter
 ```
 
+After creating the repo, you'll probably want to initialize a git repo, and install pre-commit:
+
+```sh
+cd <your-package-name>
+git init
+pre-commit autoupdate
+pre-commit install
+git add .
+pre-commit run --all-files
+git commit -m 'build: Initial Commit'
+```
+
 ### update it
 
 To update an existing project that was created from this template using cruft,
