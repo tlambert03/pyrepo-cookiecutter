@@ -97,10 +97,10 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
 
 def test_bake_and_build(cookies):
     with bake_in_temp_dir(cookies) as result:
-        run_inside_dir('git config --global user.email "you@example.com"', str(result.project_path))
-        run_inside_dir('git config --global user.name "Your Name"', str(result.project_path))
-        run_inside_dir('git init -q', str(result.project_path))
-        run_inside_dir('git add .', str(result.project_path))
-        run_inside_dir('git commit -q -m "initial"', str(result.project_path))
-        assert run_inside_dir('python -m build', str(result.project_path)) == 0
-        assert len(list((result.project_path / 'dist').iterdir())) == 2
+        run_inside_dir("git init -q", str(result.project_path))
+        run_inside_dir("git add .", str(result.project_path))
+        run_inside_dir(
+            'git commit -q -m --author="Name <>" "initial"', str(result.project_path)
+        )
+        assert run_inside_dir("python -m build", str(result.project_path)) == 0
+        assert len(list((result.project_path / "dist").iterdir())) == 2

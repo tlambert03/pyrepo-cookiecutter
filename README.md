@@ -35,4 +35,5 @@ run `cruft update` in the root of the project.
   - [pyupgrade](https://github.com/asottile/pyupgrade)
   - [flake8](https://github.com/PyCQA/flake8)
   - [mypy](https://github.com/python/mypy)
+- uses `src` layout ([why?](https://hynek.me/articles/testing-packaging/))
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) encouraged (auto-changelogs coming)
