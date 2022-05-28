@@ -94,10 +94,11 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
 def test_bake_and_build(basic_build):
     with inside_dir(str(basic_build.project_path)):
         subprocess.check_call(["git", "init", "-q"])
+        gitcfg = (basic_build.project_path / '.git' / 'config')
+        gitcfg.touch()
+        gitcfg.write_text("[user]\n\tname = Name\n\temail = email@wp.p\n")
         subprocess.check_call(["git", "add", "."])
-        subprocess.check_call(
-            ["git", "commit", "-q", '--author="Name <email@example.com>"', "-m", "init"]
-        )
+        subprocess.check_call(["git", "commit", "-q", "-m", "init"])
         subprocess.check_call(["check-manifest"])
         subprocess.check_call(["python", "-m", "build"])
         assert len(list((basic_build.project_path / "dist").iterdir())) == 2
