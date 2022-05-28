@@ -72,3 +72,21 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
+
+  # [WIP]
+  # https://python-semantic-release.readthedocs.io/en/latest/automatic-releases/github-actions.html
+  # release:
+  #   runs-on: ubuntu-latest
+  #   concurrency: release
+
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #     with:
+  #       fetch-depth: 0
+
+  #   - name: Python Semantic Release
+  #     uses: relekang/python-semantic-release@master
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       repository_username: __token__
+  #       repository_password: ${{ secrets.TWINE_API_KEY }}

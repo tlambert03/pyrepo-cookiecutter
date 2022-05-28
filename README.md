@@ -36,4 +36,36 @@ run `cruft update` in the root of the project.
   - [flake8](https://github.com/PyCQA/flake8)
   - [mypy](https://github.com/python/mypy)
 - uses `src` layout ([why?](https://hynek.me/articles/testing-packaging/))
-- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) encouraged (auto-changelogs coming)
+
+### other steps
+
+- setup the [pre-commit.ci](https://pre-commit.ci/) service to run all pre-commit
+  checks on every PR (in case contributors aren't running it locally).
+
+### Conventional Commits
+
+This is setup to use [Conventional
+Commits](https://www.conventionalcommits.org/en/v1.0.0/) (or at least, that's a
+goal). To get it working:
+
+- Use the `conventional-pre-commit` step in pre-commit. It will force you to use
+  conventional commits locally.
+- [VS Code]: Add the [Conventional
+  Commits](https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits)
+  extension, making it easier to create conventional commits.
+- This still doesn't protect GitHub PR commits, so add the [Semantic
+  PRs](https://github.com/marketplace/semantic-prs) GitHub App to check that PR
+  titles follow the Convention Commits Spec (and require squash commits)
+- Set up [`python-semantic-release` on GitHub
+  Actions](https://python-semantic-release.readthedocs.io/en/latest/automatic-releases/github-actions.html)
+  (included in `ci.yml`)
+- Protect the `main` branch:
+  - use only PRs for `main`
+  - use squash merge
+  - require the `Semantic PRs` check to pass for merging
+  - consider allowing only `semantic-release` to push to that branch.
+
+- Future: use [frappucino](https://github.com/Carreau/frappuccino) or
+  [griffe](https://github.com/mkdocstrings/griffe) to detect breaking API
+  changes & add a GitHub action to enforce a `!` in the title or `BREAKING
+  CHANGE` footer.
