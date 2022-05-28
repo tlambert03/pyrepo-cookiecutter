@@ -18,7 +18,6 @@ git init
 pre-commit autoupdate
 pre-commit install
 git add .
-pre-commit run --all-files
 git commit -m 'build: Initial Commit'
 ```
 
