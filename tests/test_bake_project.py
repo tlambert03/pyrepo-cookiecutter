@@ -38,6 +38,12 @@ def bake_in_temp_dir(cookies, *args, **kwargs):
         rmtree(str(result.project_path))
 
 
+@pytest.fixture
+def basic_build(cookies):
+    with bake_in_temp_dir(cookies) as result:
+        yield result
+
+
 def run_inside_dir(command, dirpath):
     """
     Run a command from inside a given directory, returning the exit status
@@ -54,38 +60,28 @@ def check_output_inside_dir(command, dirpath):
         return subprocess.check_output(shlex.split(command))
 
 
-def test_year_compute_in_license_file(cookies):
-    with bake_in_temp_dir(cookies) as result:
-        now = datetime.datetime.now()
-        assert str(now.year) in (result.project_path / "LICENSE").read_text()
+def test_year_compute_in_license_file(basic_build):
+    now = datetime.datetime.now()
+    assert str(now.year) in (basic_build.project_path / "LICENSE").read_text()
 
 
-def project_info(result):
-    """Get toplevel dir, project_slug, and project dir from baked cookies"""
-    project_path = str(result.project_path)
-    project_slug = os.path.split(project_path)[-1]
-    project_dir = str(result.project_path / project_slug)
-    return project_path, project_slug, project_dir
+def test_bake_with_defaults(basic_build):
+    pth = basic_build.project_path
+    assert pth.is_dir()
+    assert basic_build.exit_code == 0
+    assert basic_build.exception is None
+
+    found_toplevel_files = [f.name for f in pth.glob("*")]
+    assert "pyproject.toml" in found_toplevel_files
+    assert "src" in found_toplevel_files
+    assert (pth / "src" / "pyrepo").exists()
+    assert "tox.ini" in found_toplevel_files
+    assert "tests" in found_toplevel_files
 
 
-def test_bake_with_defaults(cookies):
-    with bake_in_temp_dir(cookies) as result:
-        assert result.project_path.is_dir()
-        assert result.exit_code == 0
-        assert result.exception is None
-
-        found_toplevel_files = [f.name for f in result.project_path.glob("*")]
-        assert "pyproject.toml" in found_toplevel_files
-        assert "src" in found_toplevel_files
-        assert (result.project_path / "src" / "pyrepo").exists()
-        assert "tox.ini" in found_toplevel_files
-        assert "tests" in found_toplevel_files
-
-
-def test_bake_and_run_tests(cookies):
-    with bake_in_temp_dir(cookies) as result:
-        assert result.project_path.is_dir()
-        assert run_inside_dir("pytest", str(result.project_path)) == 0
+def test_bake_and_run_tests(basic_build):
+    assert basic_build.project_path.is_dir()
+    assert run_inside_dir("pytest", str(basic_build.project_path)) == 0
 
 
 def test_bake_with_apostrophe_and_run_tests(cookies):
@@ -95,12 +91,14 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
         assert run_inside_dir("pytest", str(result.project_path)) == 0
 
 
-def test_bake_and_build(cookies):
-    with bake_in_temp_dir(cookies) as result:
-        run_inside_dir("git init -q", str(result.project_path))
-        run_inside_dir("git add .", str(result.project_path))
-        run_inside_dir(
-            'git commit -q -m --author="Name <>" "initial"', str(result.project_path)
-        )
-        assert run_inside_dir("python -m build", str(result.project_path)) == 0
-        assert len(list((result.project_path / "dist").iterdir())) == 2
+def test_bake_and_build(basic_build):
+    pth = str(basic_build.project_path)
+    run_inside_dir("git init -q", pth)
+    run_inside_dir("git add .", pth)
+    run_inside_dir('git commit -q --author="Name <>" -m "initial"', pth)
+    assert run_inside_dir("python -m build", pth) == 0
+    assert len(list((basic_build.project_path / "dist").iterdir())) == 2
+
+
+def test_bake_and_check_manifest(basic_build):
+    run_inside_dir("check-manifest", str(basic_build.project_path))
