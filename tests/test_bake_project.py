@@ -95,10 +95,7 @@ def test_bake_and_build(basic_build):
     pth = str(basic_build.project_path)
     run_inside_dir("git init -q", pth)
     run_inside_dir("git add .", pth)
-    run_inside_dir('git commit -q --author="Name <>" -m "initial"', pth)
+    run_inside_dir('git commit -q --author="Name <email@example.com>" -m "init"', pth)
+    assert run_inside_dir("check-manifest", pth) == 0
     assert run_inside_dir("python -m build", pth) == 0
     assert len(list((basic_build.project_path / "dist").iterdir())) == 2
-
-
-def test_bake_and_check_manifest(basic_build):
-    run_inside_dir("check-manifest", str(basic_build.project_path))
