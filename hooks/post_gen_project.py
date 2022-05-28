@@ -11,21 +11,21 @@ def remove_file(filepath: str):
     os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    if "PYTEST_CURRENT_TEST" in os.environ:
-        sys.exit()
+#     if "PYTEST_CURRENT_TEST" in os.environ:
+#         sys.exit()
 
-    with suppress(Exception):
-        subprocess.run(["git", "init", "-q"])
-        subprocess.run(["git", "add", "."])
-        subprocess.run(["git", "commit", "-q", "-m", "Initial commit"])
+#     with suppress(Exception):
+#         subprocess.run(["git", "init", "-q"])
+#         subprocess.run(["git", "add", "."])
+#         subprocess.run(["git", "commit", "-q", "-m", "Initial commit"])
 
-    try:
-        print("install pre-commit ...")
-        subprocess.run(["pip", "install", "pre-commit"], stdout=subprocess.DEVNULL)
-        print("updating pre-commit...")
-        subprocess.run(["pre-commit", "autoupdate"], stdout=subprocess.DEVNULL)
-        subprocess.run(["pre-commit", "install"])
-    except Exception:
-        print("Failed to install pre-commit.  Do it manually.")
+#     try:
+#         print("install pre-commit ...")
+#         subprocess.run(["pip", "install", "pre-commit"], stdout=subprocess.DEVNULL)
+#         print("updating pre-commit...")
+#         subprocess.run(["pre-commit", "autoupdate"], stdout=subprocess.DEVNULL)
+#         subprocess.run(["pre-commit", "install"])
+#     except Exception:
+#         print("Failed to install pre-commit.  Do it manually.")
