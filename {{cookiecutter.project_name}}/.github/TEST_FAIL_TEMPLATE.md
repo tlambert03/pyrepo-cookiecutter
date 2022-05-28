@@ -1,3 +1,4 @@
+{% raw -%}
 ---
 title: "{{ env.TITLE }}"
 labels: [bug]
@@ -10,3 +11,4 @@ with commit: {{ sha }}
 Full run: https://github.com/{{ payload.repository.full_name }}/actions/runs/{{ env.RUN_ID }}
 
 (This post will be updated if another test fails, as long as this issue remains open.)
+{%- endraw %}
