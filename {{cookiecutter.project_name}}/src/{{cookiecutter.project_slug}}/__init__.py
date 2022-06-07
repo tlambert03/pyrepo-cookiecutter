@@ -1,3 +1,5 @@
+"""{{ cookiecutter.project_short_description }}"""
+
 {% if cookiecutter.version_control == 'setuptools-scm' -%}
 from importlib.metadata import PackageNotFoundError, version
 

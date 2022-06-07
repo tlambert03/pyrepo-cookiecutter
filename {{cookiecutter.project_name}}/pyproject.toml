@@ -99,7 +99,9 @@ D100  # missing docstring in public module
 D401  # imperative mood
 W503  # line break before binary operator
 """
-# per-file-ignores = []
+per-file-ignores = [
+    "tests/*:D",
+]
 
 
 # http://www.pydocstyle.org/en/stable/usage.html
