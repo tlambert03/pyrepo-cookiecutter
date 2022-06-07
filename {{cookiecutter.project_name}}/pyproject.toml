@@ -38,18 +38,21 @@ test = [
 ]
 dev = [
     "black",
-    "flake8",
+    "cruft",
+    "flake8-bugbear",
     "flake8-docstrings",
+    "flake8-pyprojecttoml",
     "flake8-typing-imports",
+    "flake8",
     "ipython",
     "isort",
     "mypy",
+    "pdbpp",
     "pre-commit",
     "pydocstyle",
     "pytest-cov",
     "pytest",
     "rich",
-    "cruft",
 ]
 
 [project.urls]
@@ -80,6 +83,24 @@ packages = {find = {where = ["src"], exclude=[]}}
 [tool.isort]
 profile = "black"
 src_paths = ["src/{{cookiecutter.project_slug}}", "tests"]
+
+# https://flake8.pycqa.org/en/latest/user/options.html
+# https://gitlab.com/durko/flake8-pyprojecttoml
+[tool.flake8]
+exclude = "docs,.eggs,examples,_version.py"
+max-line-length = 88
+ignore = "E203"
+min-python-version = "3.8.0"
+docstring-convention = "all" # use numpy convention, while allowing D417
+extend-ignore = """
+E203  # whitespace before ':'
+D107,D203,D212,D213,D402,D413,D415,D416  # numpy
+D100  # missing docstring in public module
+D401  # imperative mood
+W503  # line break before binary operator
+"""
+# per-file-ignores = []
+
 
 # http://www.pydocstyle.org/en/stable/usage.html
 [tool.pydocstyle]
