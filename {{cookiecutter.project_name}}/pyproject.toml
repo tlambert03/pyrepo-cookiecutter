@@ -1,3 +1,4 @@
+# https://peps.python.org/pep-0517/
 [build-system]
 {% if cookiecutter.version_control == 'setuptools-scm' -%}
 requires = ["setuptools>=45", "wheel", "setuptools-scm>=6.2"]
@@ -6,6 +7,7 @@ requires = ["setuptools>=45", "wheel"]
 {%- endif %}
 build-backend = "setuptools.build_meta"
 
+# https://peps.python.org/pep-0621/
 [project]
 name = "{{cookiecutter.project_name}}"
 description = "{{ cookiecutter.project_short_description }}"
@@ -25,9 +27,10 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
 ]
 dynamic = ["version"]
-dependencies = [
-]
+dependencies = []
 
+# extras
+# https://peps.python.org/pep-0621/#dependencies-optional-dependencies
 [project.optional-dependencies]
 test = [
     "pytest>=6.0",
@@ -52,8 +55,15 @@ dev = [
 [project.urls]
 homepage = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
 repository = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
-# documentation = "readthedocs.org"
-# changelog = "github.com/me/spam/blob/master/CHANGELOG.md"
+
+# same as console_scripts entry point
+# [project.scripts]
+# spam-cli = "spam:main_cli"
+
+# Entry points
+# https://peps.python.org/pep-0621/#entry-points
+# [project.entry-points."spam.magical"]
+# tomatoes = "spam:main_tomatoes"
 
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 [tool.setuptools]
