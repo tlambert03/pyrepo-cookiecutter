@@ -13,7 +13,7 @@ name = "{{cookiecutter.project_name}}"
 description = "{{ cookiecutter.project_short_description }}"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {file = "LICENSE"}
+license = {text = "BSD 3-Clause License"}
 authors = [
   {email = "{{cookiecutter.email}}"},
   {name = "{{cookiecutter.full_name}}"},
