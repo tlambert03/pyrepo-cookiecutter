@@ -1,9 +1,17 @@
 # https://peps.python.org/pep-0517/
 [build-system]
 {% if cookiecutter.version_control == 'setuptools-scm' -%}
+{% if cookiecutter.use_cython == 'y' -%}
+requires = ["setuptools>=45", "wheel", "setuptools-scm>=6.2", "Cython>=3.0a7"]
+{%- else -%}
 requires = ["setuptools>=45", "wheel", "setuptools-scm>=6.2"]
+{%- endif %}
+{%- else -%}
+{% if cookiecutter.use_cython == 'y' -%}
+requires = ["setuptools>=45", "wheel", "Cython>=3.0a7"]
 {%- else -%}
 requires = ["setuptools>=45", "wheel"]
+{%- endif %}
 {%- endif %}
 build-backend = "setuptools.build_meta"
 

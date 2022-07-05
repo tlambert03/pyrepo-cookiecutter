@@ -1,0 +1,61 @@
+name: Test compiled
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request: {}
+  workflow_dispatch:
+
+jobs:
+ test-compiled:
+    name: ${{ matrix.platform }} (${{ matrix.python-version }}-compiled)
+    runs-on: ${{ matrix.platform }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+        platform: ["ubuntu-latest"]
+        include:
+          # - platform: "windows-latest"
+          #   python-version: "3.10"
+          - platform: "macos-latest"
+            python-version: "3.10"
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: install
+        run: |
+          python -m pip install -U wheel pip
+          pip install -e .[test,build]
+        env:
+          SKIP_CYTHON: 1
+
+      - name: compile
+        run: |
+          python setup.py build_ext --force --inplace --define CYTHON_TRACE
+          python -c "import sys, {{ cookiecutter.project_slug }}; print('compiled:', {{ cookiecutter.project_slug }}._compiled); sys.exit(0 if {{ cookiecutter.project_slug }}._compiled else 1)"
+
+      - name: test
+        run: pytest --color=yes --cov={{ cookiecutter.project_slug }} --cov-report=xml --cov-report=term-missing
+
+      - name: remove compiled binaries
+        run: |
+          pip uninstall -y cython
+          rm -rf src/{{ cookiecutter.project_slug }}/*.so src/{{ cookiecutter.project_slug }}/*.c src/{{ cookiecutter.project_slug }}/__pycache__
+
+      - name: test uncompiled
+        run: pytest --color=yes --cov={{ cookiecutter.project_slug }} --cov-report=xml --cov-append
+
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          verbose: true
