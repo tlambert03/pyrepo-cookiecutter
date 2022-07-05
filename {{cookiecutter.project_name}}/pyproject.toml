@@ -74,6 +74,9 @@ zip-safe = false
 include-package-data = true
 packages = {find = {where = ["src"], exclude=[]}}
 
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+
 {% if cookiecutter.version_control == 'setuptools-scm' %}
 # https://github.com/pypa/setuptools_scm/#pyprojecttoml-usage
 [tool.setuptools_scm]
