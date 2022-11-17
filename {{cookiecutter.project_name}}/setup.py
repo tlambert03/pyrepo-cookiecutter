@@ -20,6 +20,5 @@ sys.exit(1)
 
 setup(  # noqa
     name="{{cookiecutter.project_name}}",
-    install_requires=[
-    ],
+    install_requires=[],
 )
