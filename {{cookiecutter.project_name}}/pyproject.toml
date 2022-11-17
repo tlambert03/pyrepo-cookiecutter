@@ -66,17 +66,18 @@ source = "vcs"
 # https://github.com/charliermarsh/ruff
 [tool.ruff]
 line-length = 88
-# select = ["E", "F"]  # default
 target-version = "py38"
 extend-select = [
+    "E",    # style errors
+    "F",    # flakes
     "D",    # pydocstyle
     "I001", # isort
     "U",    # pyupgrade
     # "N",  # pep8-naming
-    "S",    # bandit
+    # "S",  # bandit
     "C",    # flake8-comprehensions
     "B",    # flake8-bugbear
-    "A",    # flake8-builtins
+    "A001", # flake8-builtins
     "RUF",  # ruff-specific rules
     "M001", # Unused noqa directive
 ]
