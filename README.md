@@ -43,14 +43,13 @@ using cruft, run `cruft update` in the root of the project.  See [cruft docs](ht
 
 ## Stuff included
 
-- [PEP 517](https://peps.python.org/pep-0517/) build system with [setuptools
-  backend](https://setuptools.pypa.io/en/latest/build_meta.html)
+- [PEP 517](https://peps.python.org/pep-0517/) build system with [hatch
+  backend](https://hatch.pypa.io/)
   - build with `python -m build`, [*not* `python setup.py`](https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html)!
 - [PEP 621](https://peps.python.org/pep-0621/) metadata in `pyproject.toml`
   - *all* additional configurables are in `pyproject`, with the exception of `flake8`, which doesn't support it.
 - uses `src` layout ([How come?](https://hynek.me/articles/testing-packaging/))
-- git tag-based versioning with
-  [setuptools-scm](https://github.com/pypa/setuptools_scm)
+- git tag-based versioning with [hatch-vcs](https://github.com/ofek/hatch-vcs)
 - autodeploy to PyPI on tagged commit (set `TWINE_API_KEY` env var on github).  (see also [semantic releases](#semantic-versioning--release))
 - Testing with [tox](https://tox.wiki/en/latest/) &
   [pytest](https://docs.pytest.org/en/7.1.x/)
