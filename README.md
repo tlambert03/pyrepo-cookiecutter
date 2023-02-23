@@ -51,10 +51,8 @@ using cruft, run `cruft update` in the root of the project.  See [cruft docs](ht
 - uses `src` layout ([How come?](https://hynek.me/articles/testing-packaging/))
 - git tag-based versioning with [hatch-vcs](https://github.com/ofek/hatch-vcs)
 - autodeploy to PyPI on tagged commit (set `TWINE_API_KEY` env var on github).  (see also [semantic releases](#semantic-versioning--release))
-- Testing with [tox](https://tox.wiki/en/latest/) &
-  [pytest](https://docs.pytest.org/en/7.1.x/)
-- CI & testing with [github actions](https://docs.github.com/en/actions) and
-  [`tox-gh-actions`](https://github.com/ymyzk/tox-gh-actions)
+- Testing with [pytest](https://docs.pytest.org/en/7.1.x/)
+- CI & testing with [github actions](https://docs.github.com/en/actions)
 - GitHub action cron-job running tests against dependency pre-releases
 - [pre-commit](https://pre-commit.com/) with
   - [conventional-pre-commit](https://github.com/compilerla/conventional-pre-commit) - enforce good commit messages

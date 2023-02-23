@@ -75,7 +75,6 @@ def test_bake_with_defaults(basic_build):
     assert "pyproject.toml" in found_toplevel_files
     assert "src" in found_toplevel_files
     assert (pth / "src" / "pyrepo").exists()
-    assert "tox.ini" in found_toplevel_files
     assert "tests" in found_toplevel_files
 
 
