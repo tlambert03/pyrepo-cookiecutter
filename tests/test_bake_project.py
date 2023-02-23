@@ -93,7 +93,7 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
 def test_bake_and_build(basic_build):
     with inside_dir(str(basic_build.project_path)):
         subprocess.check_call(["git", "init", "-q"])
-        gitcfg = (basic_build.project_path / '.git' / 'config')
+        gitcfg = basic_build.project_path / ".git" / "config"
         gitcfg.touch()
         gitcfg.write_text("[user]\n\tname = Name\n\temail = email@wp.p\n")
         subprocess.check_call(["git", "add", "."])

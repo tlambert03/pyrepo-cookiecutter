@@ -18,7 +18,7 @@ sys.exit(1)
 #
 # To be removed once GitHub catches up.
 
-setup(  # noqa
+setup(  # type: ignore # noqa
     name="{{cookiecutter.project_name}}",
     install_requires=[],
 )
