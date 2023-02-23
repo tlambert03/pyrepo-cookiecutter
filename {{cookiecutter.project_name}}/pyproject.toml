@@ -9,10 +9,9 @@ name = "{{cookiecutter.project_name}}"
 description = "{{ cookiecutter.project_short_description }}"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "BSD 3-Clause License"}
+license = { text = "BSD 3-Clause License" }
 authors = [
-  {email = "{{cookiecutter.email}}"},
-  {name = "{{cookiecutter.full_name}}"},
+    { email = "{{cookiecutter.email}}", name = "{{cookiecutter.full_name}}" },
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -21,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 dynamic = ["version"]
 dependencies = []
@@ -98,9 +98,7 @@ extend-ignore = [
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = ["tests"]
-filterwarnings = [
-    "error",
-]
+filterwarnings = ["error"]
 
 # https://mypy.readthedocs.io/en/stable/config_file.html
 [tool.mypy]
@@ -128,13 +126,12 @@ ignore = [
     ".pre-commit-config.yaml",
     ".ruff_cache/**/*",
     "tests/**/*",
-    "tox.ini",
 ]
 
 # https://python-semantic-release.readthedocs.io/en/latest/configuration.html
 [tool.semantic_release]
 version_source = "tag_only"
 branch = "main"
-changelog_sections="feature,fix,breaking,documentation,performance,chore,:boom:,:sparkles:,:children_crossing:,:lipstick:,:iphone:,:egg:,:chart_with_upwards_trend:,:ambulance:,:lock:,:bug:,:zap:,:goal_net:,:alien:,:wheelchair:,:speech_balloon:,:mag:,:apple:,:penguin:,:checkered_flag:,:robot:,:green_apple:,Other"
+changelog_sections = "feature,fix,breaking,documentation,performance,chore,:boom:,:sparkles:,:children_crossing:,:lipstick:,:iphone:,:egg:,:chart_with_upwards_trend:,:ambulance:,:lock:,:bug:,:zap:,:goal_net:,:alien:,:wheelchair:,:speech_balloon:,:mag:,:apple:,:penguin:,:checkered_flag:,:robot:,:green_apple:,Other"
 # commit_parser=semantic_release.history.angular_parser
 build_command = "pip install build && python -m build"
