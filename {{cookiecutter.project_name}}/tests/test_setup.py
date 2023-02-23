@@ -21,5 +21,8 @@ def test_setuppy() -> None:
     projdeps = set(data["project"]["dependencies"])
     assert projdeps == set(deps)
 
-    min_req = data["project"]["optional-dependencies"]["min-req"]
-    assert {k.replace(">=", "==") for k in projdeps} == set(min_req)
+    # if using the min-req optional dependency, ensure that they
+    # match the regular dependencies, but with the >= replaced by ==
+    min_req = data["project"]["optional-dependencies"].get("min-req")
+    if min_req:
+        assert {k.replace(">=", "==") for k in projdeps} == set(min_req)
