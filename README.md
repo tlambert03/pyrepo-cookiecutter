@@ -23,41 +23,39 @@ pip install cookiecutter
 cookiecutter https://github.com/tlambert03/pyrepo-cookiecutter
 ```
 
-### 2. run `git init` and `pre-commit`
+### 2. Run `git init` and install `pre-commit`
 
-After creating the repo, you'll probably want to initialize a git repo, and
-install [pre-commit](https://pre-commit.com/):
+After creating the repo, you'll want to initialize a git repo.
+
+> *This is important: you won't be able to `run pip install -e .`
+without running `git init`*
 
 ```sh
 cd <your-package-name>
 git init
-pip install pre-commit
-pre-commit autoupdate
-pre-commit install
 git add .
 git commit -m 'build: Initial Commit'
 ```
 
-### 3. Upload to GitHub
-
-If you have the [GitHub CLI](https://cli.github.com/) installed, and would like
-to create a GitHub repository for your new package:
+Optionally, install [pre-commit](https://pre-commit.com/):
 
 ```sh
-gh repo create --source=. --public --remote=origin --push
+pip install pre-commit
+pre-commit autoupdate
+pre-commit install
+git add .
+git commit -m 'chore: update pre-commit'
 ```
 
-> alternatively, you can follow github's guide for
-> [adding a local repository to github](https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)
+### 3. Install Locally and Run Tests
 
-### 4. Install Locally and Run Tests
+To run tests locally, you'll need to install the package in editable mode. 
 
-To run tests locally, you'll need to install the package in editable mode. I
-like to first create a new environment dedicated to my package:
+I like to first create a new environment dedicated to my package:
 
 ```sh
-mamba create -n <your-package-name> python=3.11
-conda activate <your-package-name>
+mamba create -n <your-package-name> python
+mamba activate <your-package-name>
 ```
 
 Then install the package in editable mode:
@@ -73,6 +71,19 @@ Finally, run the tests:
 ```sh
 pytest
 ```
+
+### 4. Upload to GitHub
+
+If you have the [GitHub CLI](https://cli.github.com/) installed, and would like
+to create a GitHub repository for your new package:
+
+```sh
+gh repo create --source=. --public --remote=origin --push
+```
+
+> alternatively, you can follow github's guide for
+> [adding a local repository to github](https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)
+
 
 ## Next Steps
 
