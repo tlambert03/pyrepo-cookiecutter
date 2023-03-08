@@ -2,7 +2,7 @@
 
 This is my personal python repository bootstrap.
 
-*This is a simplified version: using only the bare minimum*
+*This is a simplified version: using only a minimal setup without a lot of tooling.*
 
 Feel free to use it as a launching point for your next project!
 
@@ -68,21 +68,24 @@ gh repo create --source=. --public --remote=origin --push
   - build with `python -m build`, [*not* `python
     setup.py`](https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html)!
 - [PEP 621](https://peps.python.org/pep-0621/) metadata in `pyproject.toml`
-  - *all* additional configurables are also in `pyproject.toml`, with
-  links to documentation
+  - *all* additional configurables are also in `pyproject.toml`
 - uses `src` layout ([How come?](https://hynek.me/articles/testing-packaging/))
-- single source of version is your top level `__init__.py`
+- single source of version is in your top level `__init__.py`
 - Testing with [pytest](https://docs.pytest.org/en/7.1.x/)
-- basic testing on CI with [github actions](https://docs.github.com/en/actions)
+- basic testing on CI with [github actions](https://docs.github.com/en/actions),
+  (see `.github/workflows/test.yml`)
 
 ## Deploying to PyPI
 
-When ready to deploy a version, bump the version in your `__init__.py`
+When ready to deploy a version, first makd sure to bump the version in
+your `__init__.py` and commit it.  
 
-(you'll need a twin account, and a PyPI API token)
+Then, build and upload to PyPI with:
 
 ```sh
 pip install build
 python -m build
-twine upload --skip-existing dist/*
+twine upload --username YOUR_USER --password YOUR_PASSWORD --skip-existing dist/*
 ```
+
+(you'll need a PyPI account, and to be the owner/maintainer of the package)
