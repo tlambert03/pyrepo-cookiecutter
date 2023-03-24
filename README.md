@@ -6,6 +6,11 @@ This is my personal python repository bootstrap.
 
 Feel free to use it as a launching point for your next project!
 
+https://github.com/tlambert03/pyrepo-cookiecutter/tree/simple
+| For simplified/minimal starter package see the [`simple` branch](https://github.com/tlambert03/pyrepo-cookiecutter/tree/simple) |
+| ------------- | 
+
+
 ## How to use it
 
 ### 1. Create a new repo with cookiecutter
