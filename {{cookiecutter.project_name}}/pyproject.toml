@@ -64,9 +64,9 @@ source = "vcs"
 # [tool.hatch.build.targets.sdist]
 # include = ["/src", "/tests"]
 
-# [tool.hatch.build.targets.wheel]
-# only-include = ["src"]
-# sources = ["src"]
+[tool.hatch.build.targets.wheel]
+only-include = ["src"]
+sources = ["src"]
 
 # https://github.com/charliermarsh/ruff
 [tool.ruff]
