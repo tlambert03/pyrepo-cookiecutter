@@ -19,6 +19,10 @@ dependencies = []
 [tool.hatch.version]
 path = "src/{{ cookiecutter.project_slug }}/__init__.py"
 
+[tool.hatch.build.targets.wheel]
+only-include = ["src"]
+sources = ["src"]
+
 # extras
 # https://peps.python.org/pep-0621/#dependencies-optional-dependencies
 [project.optional-dependencies]
